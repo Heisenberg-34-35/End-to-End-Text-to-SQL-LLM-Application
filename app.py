@@ -25,7 +25,7 @@ def get_sql_query(user_query):
                     Now convert the following question in English to a valid SQL Query: {user_query}. 
                     No preamble, only valid SQL please
                                                        """)
-    model="llama3-8b-8192"
+    model="llama-3.1-8b-instant"
     llm = ChatGroq(
     groq_api_key = os.environ.get("GROQ_API_KEY"),
     model_name=model
