@@ -11,6 +11,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 
 
+# SQL GENERATING FUNCTION USING CHATGROQ LLM, GROQ API KEY CHAINED WITH PROMPT(CHATPROMPTTEMPLATE) USING STROUTPUTPARSER
 def get_sql_query(user_query):
     groq_sys_prompt = ChatPromptTemplate.from_template("""
                     You are an expert in converting English questions to SQL query!
@@ -35,7 +36,7 @@ def get_sql_query(user_query):
     response = chain.invoke({"user_query": user_query})
     return response
 
-
+# FUNCTION TO CHECK IF THE REQUESTED QUERY BY USER IS DESTRUCTIVE IN NATURE OR NOT OR TO AVOID ANY ALTERATIONS TO OUR DATABASE
 def return_sql_response(sql_query):
     
     if not sql_query.lstrip().upper().startswith("SELECT"):
@@ -51,6 +52,7 @@ def return_sql_response(sql_query):
         return None
 
 
+# MAIN FUNCTION THAT CALLS SQL GENERATING FUNCTION AND OUTPUTS THE SQL QUERY
 def main():
     st.set_page_config(page_title="Text To SQL")
     st.header("Talk to your Database!")
@@ -73,7 +75,13 @@ def main():
                 except sqlite3.Error as e:
                     st.error(f"An error occurred: {e}")
             else:
-                st.warning("Could not henerate SQL query.")
+                st.warning("Could not generate SQL query.")
+
+    # Sidebar Codes
+    st.sidebar.title("Tired of raising tickets or requesting data analysts for data?")
+    st.sidebar.markdown("---")
+    st.sidebar.info("Now you don't have to sit and wait for someone to fetch you data, just ask simple questions, observe the data and start with your analysis!")
+    st.sidebar.markdown("---")
 
 if __name__ == '__main__':
     main()
